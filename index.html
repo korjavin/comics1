@@ -107,18 +107,34 @@
             </div>
         </div>
 
-        <!-- AI Adventure Generator -->
+        <!-- Story -->
         <div class="mt-12 text-center">
-            <h2 class="text-4xl comic-title text-gray-800">Create a New Adventure!</h2>
-            <p class="text-gray-600 my-4">What should Mister Underpants do next? Give a simple idea!</p>
-            <div class="flex flex-col sm:flex-row gap-2 justify-center">
-                <input type="text" id="prompt-input" placeholder="e.g., fight a giant space taco" class="w-full sm:w-1/2 p-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <button id="generate-btn" class="comic-button text-2xl bg-green-500 text-white px-8 py-3 rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 transition-transform transform hover:scale-105">Generate!</button>
-            </div>
-            <div id="adventure-output" class="mt-6 p-6 bg-white rounded-2xl shadow-lg border-2 border-gray-200 min-h-[100px] text-left hidden">
-                <!-- Loader will appear here -->
-                <div id="loader" class="loader mx-auto hidden"></div>
-                <!-- Generated content will appear here -->
+            <h2 class="text-4xl comic-title text-gray-800">The Story of Mister Underpants</h2>
+            <div id="adventure-output" class="mt-6 p-6 bg-white rounded-2xl shadow-lg border-2 border-gray-200 min-h-[100px] text-left">
+                <p>There was a delightful planet called "Underpanty World" where everybody wore only Underpants.</p>
+                <p>There was a hero named Mister Underpants.</p>
+                <p>He was born when the planet was breaking and crushing and all that stuff.</p>
+                <p>And then he was slinged by he's underwear into the sky because he wanted to jump at the vilian, but he missed.</p>
+                <p>He missed and flew to earth.</p>
+                <p>Then he met the bad guy, who was actually another rocket, but aliens had transformed it into a Rocketbot.</p>
+                <p>Rocketbot flew to earth because he saw a comet and he did not know what it was.</p>
+                <p>He thought it was a wishing star,so he could make a wish, but it was the super hero: Mister Underpants.</p>
+                <p>And Mister Underpants thought he wanted to fight him because he was the super villain and then then was the big, big fight.</p>
+                <p>First rocket board was sending lots of nuclear fision bombs and rockets, but Mr. Underpants ,has taken his underwear like a slingshot and shot it back.</p>
+                <p>The rocket board was losing the battle, and Mr. Underpants relaxed, but then Rocketbot made a big nuclear fision bomb.</p>
+                <p>The big bomb was auto aimed and it almost got in Mr. Underpants, but then he hid it in the bushes, and the rocket couldn't find him, then Mr. Underpants jumped out of the bush and got behind the Rocketbot.</p>
+                <p>And the bomb killed Rocketbot itself.</p>
+                <p>But wait, if you thought the adventure was over, you haven't read nothing yet, because there is the next chapter for you, for you, Mr. Underpants and the team.</p>
+                <p><strong>Chapter 2, Mr. Underpants and the team.</strong></p>
+                <p>By the way, the rocket was gone, he saw lots of kids who had friends.</p>
+                <p>So Mr. Underpants he wanted to go to one store, and then he made friends with Captain Underpants and officer Underpants.</p>
+                <p>So they went on a adventure to find if there are more villains in the town, they searched,and searched, finally, they went to a laboratory, and found out that there is a genius threat inventer.</p>
+                <p>His name was Roti,he had a very black beard, big, big, evil eyes, and he had gray skin, heh heh heh heh he said.</p>
+                <p>They found out that Roti wanted to build a robot, like a worm, what can crawl through the city, bomb down buildings, and when they are all underground,then he can do stuff like steal money from the banks. And then the robot will always eat the buildings and banks and stuff: his name is Wobot</p>
+                <p><strong>Chapter 3, big fight.</strong></p>
+                <p>Mr. Underpants and Captain Underpants made an Underwear slingshot, so Officer Underpants could jump on the top of, then Officer Underpants made an underwear storm.</p>
+                <p>And with officer underpants'es psychokinetic powers,he takes Wobot and punched him in the ground, so  he was totally crushed and coupled.</p>
+                <p>But then the robot tries to eat them and bites his tail, and then eat himself fully.</p>
             </div>
         </div>
 
@@ -162,91 +178,6 @@
 
         // Initialize view
         updateSlideView();
-
-        // AI Adventure Generator
-        const generateBtn = document.getElementById('generate-btn');
-        const promptInput = document.getElementById('prompt-input');
-        const adventureOutput = document.getElementById('adventure-output');
-        const loader = document.getElementById('loader');
-
-        generateBtn.addEventListener('click', async () => {
-            const userPrompt = promptInput.value.trim();
-            if (!userPrompt) {
-                adventureOutput.innerHTML = '<p class="text-red-500 text-center">Please enter an idea for an adventure!</p>';
-                adventureOutput.classList.remove('hidden');
-                return;
-            }
-
-            adventureOutput.classList.remove('hidden');
-            adventureOutput.innerHTML = ''; // Clear previous content
-            loader.classList.remove('hidden');
-            adventureOutput.appendChild(loader);
-
-            const fullPrompt = `Generate a short, funny, 3-panel comic book scene idea in the style of Dav Pilkey's 'Captain Underpants'. The hero is 'Mister Underpants'. The user's idea for the villain/situation is: '${userPrompt}'.
-            
-            Format the response like this:
-            ### The Adventure of the [Villain/Situation]!
-            **Panel 1:** [Description of the first scene]
-            **Panel 2:** [Description of the action or problem]
-            **Panel 3:** [Description of the funny conclusion where Mister Underpants wins]`;
-
-            try {
-                // This is a placeholder for the actual API call.
-                // In a real environment, you would make a fetch request to the Gemini API here.
-                const generatedText = await callGeminiApi(fullPrompt);
-
-                // Simple markdown to HTML conversion
-                let htmlContent = generatedText
-                    .replace(/### (.*)/g, '<h3 class="text-2xl comic-title text-red-500 mb-2">$1</h3>')
-                    .replace(/\*\*(.*?)\*\*/g, '<strong class="text-gray-800">$1</strong>')
-                    .replace(/\n/g, '<br>');
-
-                loader.classList.add('hidden');
-                adventureOutput.innerHTML = htmlContent;
-
-            } catch (error) {
-                console.error("Error generating adventure:", error);
-                loader.classList.add('hidden');
-                adventureOutput.innerHTML = '<p class="text-red-500 text-center">Oops! Something went wrong. Please try again!</p>';
-            }
-        });
-
-        // Mock function for Gemini API call for demonstration
-        // In a real application, replace this with the actual fetch call.
-        async function callGeminiApi(prompt) {
-            // This function simulates a network request.
-            // Replace this with your actual API call logic.
-            // IMPORTANT: The following is a mock and does not actually call the Gemini API.
-            // You will need to implement the fetch call as per the instructions.
-            let chatHistory = [];
-            chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-            const payload = { contents: chatHistory };
-            const apiKey = "" // If you want to use models other than gemini-2.5-flash-preview-05-20 or imagen-3.0-generate-002, provide an API key here. Otherwise, leave this as-is.
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-            
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                if (!response.ok) {
-                    throw new Error(`API request failed with status ${response.status}`);
-                }
-                const result = await response.json();
-                if (result.candidates && result.candidates.length > 0 &&
-                    result.candidates[0].content && result.candidates[0].content.parts &&
-                    result.candidates[0].content.parts.length > 0) {
-                    return result.candidates[0].content.parts[0].text;
-                } else {
-                    return "### The Adventure of the Silent Treatment!\n**Panel 1:** Mister Underpants faces a giant, silent mime. The mime traps him in an invisible box!\n**Panel 2:** Mister Underpants tries to punch his way out, but his fists just bounce off the invisible walls with a silly 'boing' sound.\n**Panel 3:** Mister Underpants uses his underwear to slingshot himself straight up, breaking through the top of the box and landing right on the mime's head. Victory!";
-                }
-            } catch (error) {
-                console.error('API Call Error:', error);
-                // Fallback response in case of API error
-                return "### The Adventure of the Technical Difficulties!\n**Panel 1:** Mister Underpants faces a broken computer screen showing an error message.\n**Panel 2:** He tries to fix it by hitting it, but that only makes it worse.\n**Panel 3:** He finally solves the problem by using his underwear to unplug and replug the computer. The day is saved!";
-            }
-        }
 
     </script>
 </body>
