@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mister Underpants - The Comic!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom font for the comic book feel */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .comic-title, .comic-button {
+            font-family: 'Bangers', cursive;
+            letter-spacing: 2px;
+        }
+        /* Hide scrollbar for the slides container */
+        .slides-container {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        .slides-container::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, and Opera */
+        }
+        /* Simple transition for slide changes */
+        .slide {
+            transition: opacity 0.5s ease-in-out;
+        }
+        .slide.hidden {
+            opacity: 0;
+        }
+        .loader {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #ef4444;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 2s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-4xl">
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <h1 class="text-5xl md:text-7xl font-bold text-red-500 comic-title">Mister Underpants!</h1>
+            <p class="text-lg text-gray-600 mt-2">The Epic Adventures by Vitalii (the author)</p>
+        </header>
+
+        <!-- Comic Viewer -->
+        <div class="bg-white rounded-2xl shadow-2xl overflow-hidden border-4 border-gray-800">
+            <!-- Slides Container -->
+            <div id="slides-container" class="relative w-full">
+                <!-- Slide 1 -->
+                <div id="slide-1" class="slide p-4 md:p-6">
+                    <div class="aspect-w-1 aspect-h-1">
+                        <img src="images/1.png" alt="Mister Underpants flying through the sky" class="w-full h-full object-contain rounded-lg border-2 border-gray-300">
+                    </div>
+                    <div class="mt-4 text-center bg-yellow-100 border-t-4 border-yellow-400 p-3 rounded-b-lg">
+                        <p class="font-semibold text-gray-700">Scene 1: The Hero's Crash Landing</p>
+                        <p class="text-sm md:text-base">"He missed and flew to Earth!"</p>
+                    </div>
+                </div>
+                <!-- Slide 2 -->
+                <div id="slide-2" class="slide p-4 md:p-6 hidden">
+                     <div class="aspect-w-1 aspect-h-1">
+                        <img src="images/2.png" alt="Rocketbot sees a wishing star" class="w-full h-full object-contain rounded-lg border-2 border-gray-300">
+                    </div>
+                    <div class="mt-4 text-center bg-yellow-100 border-t-4 border-yellow-400 p-3 rounded-b-lg">
+                        <p class="font-semibold text-gray-700">Scene 2: The Villain's Wish</p>
+                        <p class="text-sm md:text-base">Rocketbot's Thought Bubble: "A wishing star! I wish... I wish for a worthy opponent!"</p>
+                    </div>
+                </div>
+                <!-- Slide 3 -->
+                <div id="slide-3" class="slide p-4 md:p-6 hidden">
+                     <div class="aspect-w-1 aspect-h-1">
+                        <img src="images/3.png" alt="Mister Underpants confronts Rocketbot" class="w-full h-full object-contain rounded-lg border-2 border-gray-300">
+                    </div>
+                    <div class="mt-4 text-center bg-yellow-100 border-t-4 border-yellow-400 p-3 rounded-b-lg">
+                        <p class="font-semibold text-gray-700">Scene 3: The Misunderstanding</p>
+                        <p class="text-sm md:text-base">Mister Underpants: "A super villain! I must fight you!" <br> Rocketbot: "You are not my wish! Prepare for battle!"</p>
+                    </div>
+                </div>
+                <!-- Slide 4 -->
+                <div id="slide-4" class="slide p-4 md:p-6 hidden">
+                     <div class="aspect-w-1 aspect-h-1">
+                        <img src="images/4.png" alt="Rocketbot attacks Mister Underpants" class="w-full h-full object-contain rounded-lg border-2 border-gray-300">
+                    </div>
+                    <div class="mt-4 text-center bg-yellow-100 border-t-4 border-yellow-400 p-3 rounded-b-lg">
+                        <p class="font-semibold text-gray-700">Scene 4: The First Attack!</p>
+                        <p class="text-sm md:text-base">Sound Effects: BOOM! FIZZ! WHIZ! KABLOOEY!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <div class="flex justify-between items-center p-4 bg-gray-800 rounded-b-xl">
+                <button id="prev-btn" class="comic-button text-2xl bg-red-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75 disabled:bg-gray-500 disabled:cursor-not-allowed transition-transform transform hover:scale-105">Prev</button>
+                <div id="slide-counter" class="text-white font-semibold">1 / 4</div>
+                <button id="next-btn" class="comic-button text-2xl bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 transition-transform transform hover:scale-105">Next</button>
+            </div>
+        </div>
+
+        <!-- AI Adventure Generator -->
+        <div class="mt-12 text-center">
+            <h2 class="text-4xl comic-title text-gray-800">Create a New Adventure!</h2>
+            <p class="text-gray-600 my-4">What should Mister Underpants do next? Give a simple idea!</p>
+            <div class="flex flex-col sm:flex-row gap-2 justify-center">
+                <input type="text" id="prompt-input" placeholder="e.g., fight a giant space taco" class="w-full sm:w-1/2 p-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <button id="generate-btn" class="comic-button text-2xl bg-green-500 text-white px-8 py-3 rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 transition-transform transform hover:scale-105">Generate!</button>
+            </div>
+            <div id="adventure-output" class="mt-6 p-6 bg-white rounded-2xl shadow-lg border-2 border-gray-200 min-h-[100px] text-left hidden">
+                <!-- Loader will appear here -->
+                <div id="loader" class="loader mx-auto hidden"></div>
+                <!-- Generated content will appear here -->
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Slideshow functionality
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const slideCounter = document.getElementById('slide-counter');
+        
+        let currentSlide = 1;
+        const totalSlides = slides.length;
+
+        function updateSlideView() {
+            slides.forEach(slide => {
+                slide.classList.add('hidden');
+            });
+            document.getElementById(`slide-${currentSlide}`).classList.remove('hidden');
+            slideCounter.textContent = `${currentSlide} / ${totalSlides}`;
+
+            // Disable/Enable buttons
+            prevBtn.disabled = currentSlide === 1;
+            nextBtn.disabled = currentSlide === totalSlides;
+        }
+
+        nextBtn.addEventListener('click', () => {
+            if (currentSlide < totalSlides) {
+                currentSlide++;
+                updateSlideView();
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentSlide > 1) {
+                currentSlide--;
+                updateSlideView();
+            }
+        });
+
+        // Initialize view
+        updateSlideView();
+
+        // AI Adventure Generator
+        const generateBtn = document.getElementById('generate-btn');
+        const promptInput = document.getElementById('prompt-input');
+        const adventureOutput = document.getElementById('adventure-output');
+        const loader = document.getElementById('loader');
+
+        generateBtn.addEventListener('click', async () => {
+            const userPrompt = promptInput.value.trim();
+            if (!userPrompt) {
+                adventureOutput.innerHTML = '<p class="text-red-500 text-center">Please enter an idea for an adventure!</p>';
+                adventureOutput.classList.remove('hidden');
+                return;
+            }
+
+            adventureOutput.classList.remove('hidden');
+            adventureOutput.innerHTML = ''; // Clear previous content
+            loader.classList.remove('hidden');
+            adventureOutput.appendChild(loader);
+
+            const fullPrompt = `Generate a short, funny, 3-panel comic book scene idea in the style of Dav Pilkey's 'Captain Underpants'. The hero is 'Mister Underpants'. The user's idea for the villain/situation is: '${userPrompt}'.
+            
+            Format the response like this:
+            ### The Adventure of the [Villain/Situation]!
+            **Panel 1:** [Description of the first scene]
+            **Panel 2:** [Description of the action or problem]
+            **Panel 3:** [Description of the funny conclusion where Mister Underpants wins]`;
+
+            try {
+                // This is a placeholder for the actual API call.
+                // In a real environment, you would make a fetch request to the Gemini API here.
+                const generatedText = await callGeminiApi(fullPrompt);
+
+                // Simple markdown to HTML conversion
+                let htmlContent = generatedText
+                    .replace(/### (.*)/g, '<h3 class="text-2xl comic-title text-red-500 mb-2">$1</h3>')
+                    .replace(/\*\*(.*?)\*\*/g, '<strong class="text-gray-800">$1</strong>')
+                    .replace(/\n/g, '<br>');
+
+                loader.classList.add('hidden');
+                adventureOutput.innerHTML = htmlContent;
+
+            } catch (error) {
+                console.error("Error generating adventure:", error);
+                loader.classList.add('hidden');
+                adventureOutput.innerHTML = '<p class="text-red-500 text-center">Oops! Something went wrong. Please try again!</p>';
+            }
+        });
+
+        // Mock function for Gemini API call for demonstration
+        // In a real application, replace this with the actual fetch call.
+        async function callGeminiApi(prompt) {
+            // This function simulates a network request.
+            // Replace this with your actual API call logic.
+            // IMPORTANT: The following is a mock and does not actually call the Gemini API.
+            // You will need to implement the fetch call as per the instructions.
+            let chatHistory = [];
+            chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+            const payload = { contents: chatHistory };
+            const apiKey = "" // If you want to use models other than gemini-2.5-flash-preview-05-20 or imagen-3.0-generate-002, provide an API key here. Otherwise, leave this as-is.
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+            
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (!response.ok) {
+                    throw new Error(`API request failed with status ${response.status}`);
+                }
+                const result = await response.json();
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    return result.candidates[0].content.parts[0].text;
+                } else {
+                    return "### The Adventure of the Silent Treatment!\n**Panel 1:** Mister Underpants faces a giant, silent mime. The mime traps him in an invisible box!\n**Panel 2:** Mister Underpants tries to punch his way out, but his fists just bounce off the invisible walls with a silly 'boing' sound.\n**Panel 3:** Mister Underpants uses his underwear to slingshot himself straight up, breaking through the top of the box and landing right on the mime's head. Victory!";
+                }
+            } catch (error) {
+                console.error('API Call Error:', error);
+                // Fallback response in case of API error
+                return "### The Adventure of the Technical Difficulties!\n**Panel 1:** Mister Underpants faces a broken computer screen showing an error message.\n**Panel 2:** He tries to fix it by hitting it, but that only makes it worse.\n**Panel 3:** He finally solves the problem by using his underwear to unplug and replug the computer. The day is saved!";
+            }
+        }
+
+    </script>
+</body>
+</html>
